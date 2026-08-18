@@ -35,3 +35,10 @@ function calcular(){
     }
 
 }
+
+
+$("#quadrado").css("width", "200px")
+$("#quadrado").css("background", "blue")
+$("#quadrado").css("color", "#fff")
+$("#quadrado").hide(5000)
+$("#quadrado").show(5000)
