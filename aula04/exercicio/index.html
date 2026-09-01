@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Tinta</title>
+</head>
+<body style="background-color: rgb(30, 30, 30);color: white;font-family: Verdana, Geneva, Tahoma, sans-serif;">
+
+    <h1>Calculadora de Tinta</h1><br>
+
+    <div>Largura da parede: </div>
+    <input type="text" id="divLargura" placeholder="Largura..."><br><br>
+    <div>Altura da parede: </div>
+    <input type="text" id="divAltura" placeholder="Altura..."><br><br>
+    <div>Consumo médio (m2/lit.): </div>
+    <input type="text" id="divConsumo" placeholder="metros quad. / litro..."><br><br>
+    <div>Quantas demão: </div>
+    <input type="text" id="divDemao" placeholder="Quantas demão..."><br><br><br>
+
+    <button onclick="calcular()">Calcular</button><br><br>
+
+    <hr><br>
+
+    <div id="divResultado"></div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

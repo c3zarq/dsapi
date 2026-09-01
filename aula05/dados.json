@@ -1,0 +1,13 @@
+{
+    "nome" : "Maria" ,
+    "idade" : 25 ,
+    "altura" : 1.79 ,
+    "conjuge" : {"nome": "José", "idade" : 24} ,
+    "filhos" : [
+        {"nome": "Ana", "idade" : 2},
+        {"nome": "Bia", "idade" : 4}
+    ] ,
+    "formacoes" : ["Graduação", "Mestrado"] ,
+    "casado" : true ,
+    "endereco" : null
+}
