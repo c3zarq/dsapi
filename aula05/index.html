@@ -11,6 +11,28 @@
     <button onclick="getDados()">Ler JSON</button>
     <div id="divDados"></div>
 
+    <br><hr><br>
+
+    <h1>Produtos: </h1>
+    <input type="text" id="txtNome" placeholder="Nome do Produto: "><br><br>
+    <input type="text" id="txtPreco" placeholder="Preco: "><br><br>
+    <button onclick="salvar()">salvar</button><br><br>
+    <button onclick="getProdutos()">Buscar Produtos</button><br><br>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th>Editar</th>
+                <th>Excluir</th>
+            </tr>
+        </thead>
+        <tbody id="tblProdutos">            
+        </tbody>
+    </table>
+
     <script src="script.js"></script>
 </body>
 </html>
