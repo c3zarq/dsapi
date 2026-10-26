@@ -13,7 +13,7 @@ api.use(express.urlencoded( { extended : true } ) )
 const conn = knex( { 
     client : "mysql",
     connection : {
-        host : HOSTNAME,
+        host : HOSTNAME, 
         user : "root",
         password : "",
         database : "db_dsapi"
@@ -24,6 +24,33 @@ const conn = knex( {
 api.get( "/", (req, res, next) => {
     res.status(200)
     res.json( { resposta: "Welcome to db_dsapi"})
+})
+
+api.get( "/produto", (req, res, next) => {
+    conn("produtos")
+        .join( "categorias", "produtos.categoria_id", "=", "categorias.id")
+        .select("produtos.*", "categorias.nome AS cat")
+        .orderBy("produtos.nome")
+        .then( (dados) => {
+            res.status(200)
+            res.json ( dados)
+        })
+        .catch(next)
+})
+
+api.get("/produto/:id", (req,res, next) => {
+    const idProduto = req.params.id
+
+    conn("produtos")
+        .join("categorias", "produtos.categoria_id", "=", "categorias.id")
+        .select("produtos.*", "categorias.nome AS cat")
+        .where("produtos.id", idProduto)
+        .first()
+        .then( (dados) => {
+            res.status(200)
+            res.json ( dados )
+        })
+        .catch(next)
 })
 
 // Colocando o servidor no ar

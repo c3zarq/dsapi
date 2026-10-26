@@ -1,0 +1,151 @@
+create database db_dsapi;
+use db_dsapi;
+
+drop table cidades;
+
+create table cidades(
+	id int primary key auto_increment,
+    nome varchar(50)
+);
+
+insert into cidades (nome)
+	values
+		('Porto Alegre'),
+        ('Caxias do Sul'),
+        ('Canoas'),
+        ('Pelotas'),
+        ('Santa Maria'),
+        ('Gravataí'),
+        ('Novo Hamburgo'),
+        ('Viamão'),
+        ('São Leopoldo'),
+        ('Passo Fundo');
+    
+select * from cidades;
+
+drop table clientes;
+    
+create table clientes(
+	id int primary key auto_increment,
+	nome varchar(100) not null,
+	altura double not null,
+	nascimento date not null,
+    cidade_id int not null,
+	constraint foreign key (cidade_id) references cidades(id) 
+);
+
+insert into clientes (nome, altura, nascimento, cidade_id)
+values
+    ('Ana Silva', 1.65, '1995-03-12', 3),
+    ('Bruno Lima', 1.82, '1988-07-24', 1),
+    ('Caio Costa', 1.75, '2001-11-05', 8),
+    ('Daniel Souza', 1.70, '1993-01-30', 5),
+    ('Eduarda Melo', 1.58, '1999-05-14', 2),
+    ('Felipe Reis', 1.79, '1990-09-18', 10),
+    ('Gabriel Dias', 1.85, '1985-04-22', 4),
+    ('Helena Cruz', 1.62, '2003-08-09', 7),
+    ('Igor Rocha', 1.73, '1997-12-25', 9),
+    ('Julia Alves', 1.67, '1994-02-17', 6),
+    ('Lucas Neto', 1.76, '1991-06-03', 2),
+    ('Maria Ramos', 1.60, '1987-10-11', 5),
+    ('Nuno Gomes', 1.81, '2000-01-19', 1),
+    ('Olívia Ortiz', 1.64, '1996-04-27', 8),
+    ('Pedro Ferro', 1.78, '1992-08-14', 3),
+    ('Raquel Santos', 1.69, '1989-11-23', 10),
+    ('Samuel Rosa', 1.72, '1998-03-07', 4),
+    ('Tânia Luz', 1.61, '2002-07-31', 6),
+    ('Vitor Hugo', 1.88, '1984-09-05', 9),
+    ('Yara Pires', 1.55, '1995-12-12', 7),
+    ('Arthur Faria', 1.74, '1993-05-20', 1),
+    ('Beatriz Vila', 1.63, '1997-10-02', 3),
+    ('Carlos André', 1.80, '1990-02-15', 5),
+    ('Diana Sales', 1.66, '2001-06-29', 2),
+    ('Enzo Lopes', 1.77, '1996-01-11', 8),
+    ('Flávia Nunes', 1.59, '1986-08-24', 6),
+    ('Gustavo Lima', 1.83, '1999-04-03', 4),
+    ('Iris Antunes', 1.68, '1994-07-16', 10),
+    ('Jorge Silva', 1.71, '1992-11-08', 7),
+    ('Laura Pinto', 1.62, '2000-09-30', 9);
+
+select * from clientes;
+
+create table pedidos (
+	id int auto_increment primary key,
+    horario datetime,
+    endereco varchar(200),
+    cliente_id int not null,
+    constraint foreign key (cliente_id) references clientes(id)
+);
+
+select * from pedidos;
+
+create table categorias (
+	id int auto_increment primary key,
+    nome varchar(100)
+);
+
+insert into categorias (nome)
+values
+	('Eletrônicos'),
+    ('Roupas'),
+    ('Livros'),
+    ('Instrumentos'),
+    ('Brinquedos');
+
+select * from categorias;
+
+create table produtos (
+	id int auto_increment primary key,
+    nome varchar(100) not null,
+    preco double not null,
+    quantidade double not null,
+    categoria_id int not null,
+    constraint foreign key (categoria_id) references categorias(id)
+);
+
+insert into produtos (nome, preco, quantidade, categoria_id)
+values
+    ('Smartphone 128GB', 2499.90, 15, 1),
+    ('Fone de Ouvido Bluetooth', 189.90, 45, 1),
+    ('Smartwatch Sport', 349.00, 20, 1),
+    ('Carregador Rápido Tipo-C', 59.90, 100, 1),
+    ('Caixa de Som Portátil', 299.90, 25, 1),
+    ('Teclado Mecânico RGB', 420.00, 12, 1),
+    ('Camiseta Algodão Básica', 49.90, 80, 2),
+    ('Calça Jeans Slim Fit', 119.90, 40, 2),
+    ('Jaqueta Corta Vento', 189.00, 18, 2),
+    ('Moletom com Capuz', 149.90, 22, 2),
+    ('Tênis Casual Casual', 229.90, 30, 2),
+    ('Meias Cano Alto (Par)', 15.00, 150, 2),
+    ('Fundação', 79.90, 10, 3),
+    ('O Banquete', 45.00, 35, 3),
+    ('1984 - George Orwell', 39.90, 28, 3),
+    ('Sapiens', 54.90, 40, 3),
+    ('Nexus', 62.00, 15, 3),
+    ('Um Estudo em Vermelho', 29.90, 50, 3),
+    ('Violão Acústico Nylon', 599.00, 8, 4),
+    ('Guitarra Strato Elétrica', 1250.00, 5, 4),
+    ('Teclado Musical 61 Teclas', 890.00, 6, 4),
+    ('Ukulele Soprano Acústico', 199.90, 14, 4),
+    ('Cajon Profissional', 340.00, 7, 4),
+    ('Cabo P10 Blindado 3m', 45.00, 60, 4),
+    ('Blocos de Montar 500pçs', 129.90, 25, 5),
+    ('Boneca Articulada', 89.90, 30, 5),
+    ('Carrinho de Controle Remoto', 159.90, 14, 5),
+    ('Jogo de Tabuleiro Banco Imob.', 119.00, 20, 5),
+    ('Cubo Mágico Profissional', 35.00, 75, 5),
+    ('Quebra-Cabeça 1000 Peças', 59.90, 40, 5);
+
+select * from produtos;
+
+create table pedidos_produtos(
+	pedido_id int not null,
+    produto_id int not null,
+    preco double,
+    quantidade double,
+    primary key (pedido_id, produto_id),
+    constraint foreign key (pedido_id) references pedidos(id),
+    constraint foreign key (produto_id) references produtos(id)
+);
+
+select * from pedidos_produtos;
