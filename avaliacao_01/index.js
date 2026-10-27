@@ -53,6 +53,19 @@ api.get("/produto/:id", (req,res, next) => {
         .catch(next)
 })
 
+api.post("/produto", (req, res, next) => {
+    conn("produtos")
+        .insert(req.body)
+        .then((dados) => {
+            if (!dados){
+                return next (http_errors(404, "Erro ao inserir"))
+            }
+            res.status(201)
+            res.json ({resposta: "Produto inserido!", id: dados[0]})
+        })
+        .catch(next)
+})
+
 // Colocando o servidor no ar
 api.listen ( PORT, () => {
     console.log(`API rodando em http://${HOSTNAME}:${PORT}`)
