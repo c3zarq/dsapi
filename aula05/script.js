@@ -101,5 +101,8 @@ function salvar(){
 }
 
 function editar(){
-    
+    id = objJOSON.id
+    document.getElementById("txtNome").innerHTML = objJSON.name
+    document.getElementById("txtPreco").innerHTML = objJOSON.preco
+
 }

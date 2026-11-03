@@ -57,6 +57,7 @@ api.post("/produto", (req, res, next) => {
     conn("produtos")
         .insert(req.body)
         .then((dados) => {
+<<<<<<< HEAD
             if (!dados || dados.length === 0) {
                 return next(http_errors(400, "Erro ao inserir produto. :("))
             }
@@ -91,6 +92,13 @@ api.delete("/produto/:id", (req, res, next) => {
                 return next(http_errors(404, "Produto não encontrado. :("))
             }
             res.status(200).json({resposta: "Produto excluído com sucesso! :)"})
+=======
+            if (!dados){
+                return next (http_errors(404, "Erro ao inserir"))
+            }
+            res.status(201)
+            res.json ({resposta: "Produto inserido!", id: dados[0]})
+>>>>>>> e5173033232c3221b2ba3461f91e579b64093123
         })
         .catch(next)
 })
