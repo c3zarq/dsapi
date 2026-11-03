@@ -53,6 +53,48 @@ api.get("/produto/:id", (req,res, next) => {
         .catch(next)
 })
 
+api.post("/produto", (req, res, next) => {
+    conn("produtos")
+        .insert(req.body)
+        .then((dados) => {
+            if (!dados || dados.length === 0) {
+                return next(http_errors(400, "Erro ao inserir produto. :("))
+            }
+            res.status(201).json({resposta: "Produto inserido com sucesso! :)", id: dados[0]})
+        })
+        .catch(next)
+})
+
+api.put("/produto/:id", (req, res, next) => {
+    const idProduto = req.params.id
+
+    conn("produtos")
+        .where("id", idProduto)
+        .update(req.body)
+        .then((afetados) => {
+            if  (!afetados) {
+                return next(http_errors(404, "Produto não encontrado. :("))
+            }
+            res.status(200).json({ resposta: "produtocadastrado com sucesso! :)"})
+        })
+        .catch(next)
+})
+
+api.delete("/produto/:id", (req, res, next) => {
+    const idProduto = req.params.id
+
+    conn("produtos")
+        .where("id", idProduto)
+        .del()
+        .then((afetados) => {
+            if (!afetados) {
+                return next(http_errors(404, "Produto não encontrado. :("))
+            }
+            res.status(200).json({resposta: "Produto excluído com sucesso! :)"})
+        })
+        .catch(next)
+})
+
 // Colocando o servidor no ar
 api.listen ( PORT, () => {
     console.log(`API rodando em http://${HOSTNAME}:${PORT}`)
