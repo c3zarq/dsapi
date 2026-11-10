@@ -2,12 +2,26 @@ const express = require('express')
 const knex = require('knex')
 const http_errors = require('http-errors')
 
+// Adicionando Biblioteca CORS
+const cors = require("cors")
+
 const PORT = 8001
 const HOSTNAME = "localhost" //poderia ser 127.0.0.1
 
 const api = express()
 api.use(express.json())
 api.use(express.urlencoded( { extended : true } ) )
+
+api.use( cors() )
+
+/*
+api.use( cors({
+    origin: "http://localhost:80",
+    methods: ["PUT", "GET"] , 
+    allowedHeaders: ['Content-type', 'Athorization'],
+    credentials: true
+}) )
+*/
 
 // Criar a conexão com o banco
 
@@ -158,7 +172,7 @@ api.delete( "/category/:idCat", (req, res, next) => {
     const idCat = req.params.idCat    
     conn("categoria")
         .where( "id", idCat )
-        .delete(\ )
+        .delete( )
         .then( (dados) => {
             if( !dados ){
                 return next( http_errors( 404 , "Erro ao excluir" ))
