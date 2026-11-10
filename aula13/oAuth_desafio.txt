@@ -94,6 +94,5 @@ email
 
 ---
 
-**Minha proposta:** um único arquivo JavaScript, três rotas, três dependências e nenhuma persistência de dados.
+Um único arquivo JavaScript, três rotas, três dependências e nenhuma persistência de dados.
 
-É suficiente para cumprir o desafio e, principalmente, entender o OAuth 2.0 na prática.
