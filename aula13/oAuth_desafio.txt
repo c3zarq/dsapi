@@ -8,6 +8,9 @@ Desafio:
 
 # Planejamento
 
+Um único arquivo JavaScript, três rotas, três dependências e nenhuma persistência de dados.
+
+
 ## 1. Estrutura do projeto
 
 ```text
@@ -94,5 +97,4 @@ email
 
 ---
 
-Um único arquivo JavaScript, três rotas, três dependências e nenhuma persistência de dados.
 
