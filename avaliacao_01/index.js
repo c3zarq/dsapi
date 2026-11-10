@@ -57,7 +57,6 @@ api.post("/produto", (req, res, next) => {
     conn("produtos")
         .insert(req.body)
         .then((dados) => {
-<<<<<<< HEAD
             if (!dados || dados.length === 0) {
                 return next(http_errors(400, "Erro ao inserir produto. :("))
             }
@@ -92,15 +91,48 @@ api.delete("/produto/:id", (req, res, next) => {
                 return next(http_errors(404, "Produto não encontrado. :("))
             }
             res.status(200).json({resposta: "Produto excluído com sucesso! :)"})
-=======
-            if (!dados){
-                return next (http_errors(404, "Erro ao inserir"))
-            }
-            res.status(201)
-            res.json ({resposta: "Produto inserido!", id: dados[0]})
->>>>>>> e5173033232c3221b2ba3461f91e579b64093123
         })
         .catch(next)
+})
+
+api.post("/pedidos", async (req, res, next) => {
+    
+    const {cliente_id, endereco, produtos} = req.body
+
+    if (!cliente_id || !produtos || produtos.length === 0) {
+        return res.status(400).json({ erro: "Pedido sem cliente ou sem produtos. :("})
+    }
+
+    try {
+        await conn.transaction(async (trx) => {
+            
+            const [pedido_id] = await trx("pedidos").insert({
+                cliente_id: cliente_id,
+                endereco: endereco || "Retirada no balcão",
+                horario: new Date()
+            })
+
+            const itensDoPedido = produtos.map(item => ({
+                pedido_id: pedido_id,
+                produto_id: item.produto_id,
+                quantidade: item.quantidade,
+                preco: item.preco
+            }))
+
+            await trx("pedidos_produtos").insert(itensDoPedido)
+
+            res.status(201).json({
+                resposta: "Pedido realizado com sucesso! :)",
+                pedido_id: pedido_id
+            })
+        })
+    } catch (error) {
+        console.error("Erro no BD:", error)
+        res.status(500).json({
+            erro: "Falha na transação do banco",
+            mensagem_mysql: error.sqlMessage,
+        })
+    }
 })
 
 // Colocando o servidor no ar
