@@ -1,0 +1,99 @@
+### oAuth
+
+Desafio:
+
+- Construir uma aplicação utilizando oAuth2 que permita realizar login em um serviço de sua escolha: Facebook, twitter, github…
+- Esta aplicação deve retornar alguma informação como por exemplo o Nome do usuário que fizer login.
+
+
+# Planejamento
+
+## 1. Estrutura do projeto
+
+```text
+google-oauth/
+│
+├── server.js
+├── .env
+├── .gitignore
+└── package.json
+```
+
+**Apenas quatro arquivos.**
+
+| Arquivo | Função |
+|---|---|
+| `server.js` | Servidor, rotas e fluxo OAuth. |
+| `.env` | Credenciais do Google. |
+| `.gitignore` | Protege as credenciais. |
+| `package.json` | Dependências do projeto. |
+
+## 2. Funcionamento
+
+Teremos apenas duas telas:
+
+**Tela inicial:**
+
+```text
+------------------------------
+     MINHA APLICAÇÃO
+
+     [ Entrar com Google ]
+------------------------------
+```
+
+**Depois do login:**
+
+```text
+------------------------------
+       LOGIN REALIZADO!
+
+       Olá, Cezar!
+------------------------------
+```
+
+## 3. Rotas necessárias
+
+Somente três:
+
+| Rota | Função |
+|---|---|
+| `/` | Apresenta o botão de login. |
+| `/auth/google` | Redireciona para o Google. |
+| `/auth/google/callback` | Recebe o retorno e apresenta o nome. |
+
+## 4. Bibliotecas
+
+Vamos utilizar somente:
+
+- `express`: servidor e rotas.
+- `google-auth-library`: comunicação com OAuth 2.0.
+- `dotenv`: leitura das credenciais.
+
+Podemos trabalhar com HTML diretamente no `server.js`, sem EJS, React ou qualquer outra tecnologia de interface.
+
+## 5. O que vamos aprender?
+
+O projeto precisa demonstrar apenas cinco operações:
+
+1. Solicitar autorização ao Google.
+2. Receber o código de autorização (`authorization_code`).
+3. Trocar o código por tokens (`access_token` e `id_token`).
+4. Validar a identidade do usuário.
+5. Recuperar e apresentar o nome.
+
+Para isso, utilizaremos os escopos:
+
+```text
+openid
+profile
+email
+```
+
+**Uma ressalva técnica:** também precisamos validar o parâmetro `state` para proteger o fluxo contra CSRF. Podemos fazer isso com uma implementação pequena, sem adicionar uma estrutura de autenticação completa.
+
+---
+
+**Minha proposta:** um único arquivo JavaScript, três rotas, três dependências e nenhuma persistência de dados.
+
+É suficiente para cumprir o desafio e, principalmente, entender o OAuth 2.0 na prática.
