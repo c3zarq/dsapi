@@ -135,6 +135,36 @@ api.post("/pedidos", async (req, res, next) => {
     }
 })
 
+api.get("/pedidos/:cliente_id", (req, res, next) => {
+    const idCliente = req.params.cliente_id
+
+    conn("pedidos")
+        .select(
+            "pedidos.id AS pedido_id",
+            "pedidos.horario",
+            "pedidos.endereco",
+            "clientes.nome AS cliente_nome",
+            "produtos.nome AS produto_nome",
+            "pedidos_produtos.quantidade",
+            "pedidos_produtos.preco AS preco_unitario"
+        )
+
+        .join("clientes", "clientes.id", "=", "pedidos.cliente_id") // Dados do cliente
+        .join("pedidos_produtos", "pedidos_produtos.pedido_id", "=", "pedidos.id") // Itens do pedido
+        .join("produtos", "produtos.id", "=", "pedidos_produtos.produto_id") //Filtra pelo cliente
+        .where("pedidos.cliente_id", idCliente)
+        .then((dados) => {
+            if (!dados || dados.length === 0) {
+                return res.status(404).json({ erro: "Nenhum pedido encontrado para este cliente. :("})
+            }
+            res.status(200).json(dados)
+        })
+        .catch((error) => {
+            console.error(error)
+            res.status(500).json({erro: "Falha ao buscar pedidos. :("})
+        })
+})
+
 // Colocando o servidor no ar
 api.listen ( PORT, () => {
     console.log(`API rodando em http://${HOSTNAME}:${PORT}`)
